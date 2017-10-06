@@ -9,8 +9,9 @@
 uint8_t temp_sensor = P1_0;
 uint8_t moist_sensor = P1_4;
 uint8_t humid_sensor = P1_5;
-uint8_t ph_sensor = P1_6;s
+uint8_t ph_sensor = P1_6;
 uint8_t water_level = P1_7;
+uint8_t button = P1_3;
 
 uint16_t temp_reading = 0;
 uint16_t moist_reading = 0;
@@ -18,7 +19,9 @@ uint16_t humid_reading = 0;
 uint16_t ph_reading = 0;
 uint16_t water_reading = 0;
 
-boolean button_state = LOW, lastbutton_state = LOW;
+unsigned long present_ms = 0, last_ms = 0,update_time = 1000;
+
+boolean button_status = LOW,button_state = LOW, lastbutton_state = LOW;
 
 void setup() {
 
@@ -39,10 +42,15 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+  present_ms = millis();
   read_sensor_data();
-  delay(1);
-  calc_temp();
-  calc_moist();
+  if(present_ms - last_ms > update_time)
+  {
+    last_ms = present_ms;
+    calc_temp();
+    calc_moist();
+    send_data();
+  }
 }
 void calc_temp()
 {
@@ -56,20 +64,32 @@ void calc_moist()
 }
 void read_sensor_data()
 {
+  button_state = digitalRead(button);
+  if(button_state == LOW && lastbutton_state == HIGH)
+  {
+    button_status = !button_status;
+  }
+  lastbutton_state = button_state;
   temp_reading = analogRead(temp_sensor);
   moist_reading = analogRead(moist_sensor);
   humid_reading = analogRead(humid_sensor);
   ph_reading = analogRead(ph_sensor);
   water_reading = analogRead(water_level);
-  Serial.print("temp: ");
+}
+
+void send_data()
+{
+  Serial.print("#");
+  Serial.print(button_status);
+  Serial.print("#");
   Serial.print(temp_reading);
-  Serial.print(" moist: ");
+  Serial.print("#");
   Serial.print(moist_reading);
-  Serial.print(" humid: ");
+  Serial.print("#");
   Serial.print(humid_reading);
-  Serial.print(" ph: ");
+  Serial.print("#");
   Serial.print(ph_reading);
-  Serial.print(" water lev: ");
+  Serial.print("#");
   Serial.println(water_reading);
 }
 

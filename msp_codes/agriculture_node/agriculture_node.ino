@@ -6,12 +6,16 @@
   Water Level sensor
   Motor Control
 */
+
 uint8_t temp_sensor = P1_0;
 uint8_t moist_sensor = P1_4;
 uint8_t humid_sensor = P1_5;
 uint8_t ph_sensor = P1_6;
 uint8_t water_level = P1_7;
 uint8_t button = P1_3;
+uint8_t fan = P2_0;
+uint8_t spray = P2_1;
+uint8_t pump = P2_2;
 
 uint16_t temp_reading = 0;
 uint16_t moist_reading = 0;
@@ -31,6 +35,10 @@ void setup() {
   pinMode(humid_sensor, INPUT);
   pinMode(ph_sensor, INPUT);
   pinMode(water_level, INPUT);
+
+  pinMode(fan,OUTPUT);
+  pinMode(spray,OUTPUT);
+  pinMode(pump,OUTPUT);
 
   // Enabling push button that controls motor as Output (Internal Pull-up)
   P1OUT |= BIT3;

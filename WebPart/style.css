@@ -1,0 +1,47 @@
+h1,h2{
+	text-align: center;
+	color:grey;
+}
+h4{
+	margin-left: 43%;
+	color:grey;
+}
+body{
+	background-color: white;
+	font-family:sans-serif;
+}
+
+input[type=text],input[type=email],input[type=password]{
+  margin-left: 40%;
+  margin-bottom: 10px;
+	background: white;
+	border: 2px solid #F2F2F2;
+    border-radius: 5px;
+    height: 20px;
+    font-size: 15px;
+}
+input[type=submit]
+{
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    cursor: pointer;
+    margin-left: 43%;
+    margin-bottom: 20px;
+    display: block;
+}
+p{
+	text-align: center;
+	color:grey;
+}
+
+#team_button{
+    background-color: 4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin:auto;
+    display: block;
+}

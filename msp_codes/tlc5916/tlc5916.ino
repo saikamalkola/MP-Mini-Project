@@ -1,5 +1,5 @@
 #include "SPI.h"
-int latch_pin = P1_3; // using digital pin 10 for SPI slave select
+int latch_pin = P1_3; 
 
 void setup()
 {

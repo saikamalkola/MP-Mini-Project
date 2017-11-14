@@ -1,10 +1,14 @@
-0void setup() {
+void setup() {
   // put your setup code here, to run once:
 Serial.begin(9600);
 }
 
 void loop() {
   // put your main code here, to run repeatedly: 
-  Serial.println(analogRead(P1_3));
-  delay(1);
+  for(int i = 0; i < 6; i++)
+  {
+    Serial.print(!digitalRead(i+5));
+    Serial.print(" ");
+  }
+  Serial.println("");
 }

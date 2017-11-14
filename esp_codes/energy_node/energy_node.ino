@@ -7,13 +7,9 @@ const char* password = "kamalkamal";//my WiFi Password
 HTTPClient http;
 
 String username = "saikamalkola";
-String temperature = "10";
-String moisture = "70";
-String humidity = "100";
-String water_level = "500";
-String ph = "500";
+String kwh[8];
 
-String server = "http://10.50.38.165";
+String server = "http://192.168.43.222";
 int port = 80;
 String response;
 
@@ -58,11 +54,11 @@ void parse_msg()
     }
   }
   Serial.println(msg);
-  temperature = msg.substring(limits[0], limits[1] - 1);
-  moisture = msg.substring(limits[1], limits[2] - 1);
-  humidity = msg.substring(limits[2], limits[3] - 1);
-  ph = msg.substring(limits[3], limits[4] - 1);
-  water_level = msg.substring(limits[4], limits[5] - 1);
+    for(int i = 0; i < 8; i++)
+  {
+    kwh[i] = msg.substring(limits[i], limits[i+1] - 1);
+    Serial.println(kwh[i]);
+  }
 }
 
 void parse_response()
@@ -82,19 +78,14 @@ void req_server()
 
   if (WiFi.status() == WL_CONNECTED)
   {
-    String url = "/MiniProject/get_agri_data.php/?username=";
+    String url = "/MiniProject/get_energy_data.php/?username=";
     url += username;
     url += "&data=";
-    url += temperature;
-    url += "_";
-    url += moisture;
-    url += "_";
-    url += humidity;
-    url += "_";
-    url += water_level;
-    url += "_";
-    url += ph;
-
+    for (int i = 0; i < 7; i++)
+    { url += kwh[i];
+      url += "_";
+    }
+    url += kwh[7];
     
     String request = server + url;
     http.begin(request);
